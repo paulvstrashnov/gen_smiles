@@ -34,7 +34,7 @@ def read_mol_file(filename):
         bonds.append((atom1, atom2, bond_order))
     return atoms, bonds
   
-  def generate_molecular_graph(atoms, bonds):
+def generate_molecular_graph(atoms, bonds):
     """
     Generates a molecular graph from a list of atoms and bonds.
 
@@ -48,8 +48,8 @@ def read_mol_file(filename):
     Returns:
         G (networkx.Graph): a NetworkX graph object representing the molecule,
             where each node represents an atom and each edge represents a bond,
-            and each node and edge has attributes for element symbol, charge,
-            and bond order, respectively
+            and each node and edge has attributes for element symbol and bond order, 
+            respectively
     """
     G = nx.Graph()
     for i, atom in enumerate(atoms):
@@ -64,7 +64,17 @@ def read_mol_file(filename):
         G.add_edge(atom1, atom2, order=bond_type)
     return G
   
-  def canonical_Morgan(G):
+def canonical_Morgan(G):
+    """
+    Computes the canonical invariants and labels for each atom in a molecular graph.
+
+    Args:
+        G (networkx.Graph): a NetworkX graph object representing the molecule
+
+    Returns:
+        inv (dict): a dictionary of canonical invariants for each atom
+        lab (dict): a dictionary of canonical labels for each atom
+    """
     # initialize invariants and labels
     inv = {i: 1 for i in G.nodes()}
     lab = {i: 0 for i in G.nodes()}
@@ -75,8 +85,37 @@ def read_mol_file(filename):
     
     return inv, lab
   
-  def compute_invariant(G, inv):
+def compute_invariant(G, inv):
     inv_length = len(set(inv.values()))
     # compute invariant of each atom
     for x in G.nodes():
         pass
+
+def gen_smiles(molfile):
+    """
+    Generates a SMILES string from a mol file.
+
+    Args:
+        molfile (str): the name of the mol file
+
+    Returns:
+        smiles (str): the SMILES string
+    """
+
+    # Read mol file
+    atoms, bonds = read_mol_file(molfile)
+
+    # Generate molecular graph
+    G = generate_molecular_graph(atoms, bonds)
+
+    # Compute canonical invariants and labels
+    inv, lab = canonical_Morgan(G)
+
+    # Continue
+    pass
+
+
+if __name__ == '__main__':
+    molfile = 'tests/mol/ethylmethylketone.mol'
+    smiles = gen_smiles(molfile)
+    print(smiles)

@@ -1,53 +1,80 @@
-import src.gen_smiles as gen_smiles
-import os
-import pytest
+from src.main import gen_smiles
 from rdkit import Chem
 
 def test_methane():
-    smiles = gen_smiles("tests/mol/methane.mol2")
+    molfile = "tests/mol/methane.mol"
+    smiles_to_test = gen_smiles(molfile)
     expected_smiles = "C"
-    assert Chem.MolToSmiles(mol) == smiles
+    assert smiles_to_test == expected_smiles
 
 def test_ethane():
-    smiles = gen_smiles("tests/mol/ethane.mol2")
+    molfile = "tests/mol/ethane.mol"
+    smiles_to_test = gen_smiles(molfile)
     expected_smiles = "CC"
-    mol = Chem.MolFromSmiles(expected_smiles)
-    assert Chem.MolToSmiles(mol) == smiles
+    assert smiles_to_test == expected_smiles
 
 def test_propane():
-    smiles = gen_smiles("tests/mol/propane.mol2")
+    molfile = "tests/mol/propane.mol"
+    smiles_to_test = gen_smiles(molfile)
     expected_smiles = "CCC"
-    mol = Chem.MolFromSmiles(expected_smiles)
-    assert Chem.MolToSmiles(mol) == smiles
+    assert smiles_to_test == expected_smiles
 
 def test_hexane():
-    smiles = gen_smiles("tests/mol/hexane.mol2")
+    molfile = "tests/mol/hexane.mol"
+    smiles_to_test = gen_smiles(molfile)
     expected_smiles = "CCCCCC"
-    mol = Chem.MolFromSmiles(expected_smiles)
-    assert Chem.MolToSmiles(mol) == smiles
+    assert smiles_to_test == expected_smiles
 
 def test_isobutane():
-    smiles = gen_smiles("tests/mol/isobutane.mol2")
+    molfile = "tests/mol/isobutane.mol"
+    smiles_to_test = gen_smiles(molfile)
     expected_smiles = "CC(C)C"
-    mol = Chem.MolFromSmiles(expected_smiles)
-    assert Chem.MolToSmiles(mol) == smiles
+    assert smiles_to_test == expected_smiles
     
- def test_dimethylethylphenol():
-    smiles = gen_smiles("tests/mol/dimethylethylphenol.mol2")
-    assert Chem.MolToSmiles(smiles) is not None
+def test_dimethylethylphenol():
+    molfile = "tests/mol/dimethylethylphenol.mol"
+    smiles_to_test = gen_smiles(molfile)
+    mol = Chem.MolFromSmiles(smiles_to_test)
+    assert mol is not None
+    truth = Chem.MolFromMolFile(molfile)
+    assert Chem.MolToSmiles(mol) == Chem.MolToSmiles(truth)
 
-def test_benzene():
-    smiles = gen_smiles("tests/mol/benzene.mol2")
-    assert Chem.MolToSmiles(smiles) is not None
+def test_ethylmethylketone():
+    molfile = "tests/mol/ethylmethylketone.mol"
+    smiles_to_test = gen_smiles(molfile)
+    mol = Chem.MolFromSmiles(smiles_to_test)
+    assert mol is not None
+    truth = Chem.MolFromMolFile(molfile)
+    assert Chem.MolToSmiles(mol) == Chem.MolToSmiles(truth)
 
 def test_toluene():
-    smiles = gen_smiles("tests/mol/toluene.mol2")
-    assert Chem.MolToSmiles(smiles) is not None
+    molfile = "tests/mol/toluene.mol"
+    smiles_to_test = gen_smiles(molfile)
+    mol = Chem.MolFromSmiles(smiles_to_test)
+    assert mol is not None
+    truth = Chem.MolFromMolFile(molfile)
+    assert Chem.MolToSmiles(mol) == Chem.MolToSmiles(truth)
 
 def test_acetaminophen():
-    smiles = gen_smiles("tests/mol/acetaminophen.mol2")
-    assert Chem.MolToSmiles(smiles) is not None
+    molfile = "tests/mol/acetaminophen.mol"
+    smiles_to_test = gen_smiles(molfile)
+    mol = Chem.MolFromSmiles(smiles_to_test)
+    assert mol is not None
+    truth = Chem.MolFromMolFile(molfile)
+    assert Chem.MolToSmiles(mol) == Chem.MolToSmiles(truth)
 
 def test_diphenyl():
-    smiles = gen_smiles("tests/mol/diphenyl.mol2")
-    assert Chem.MolToSmiles(smiles) is not None
+    molfile = "tests/mol/diphenyl.mol"
+    smiles_to_test = gen_smiles(molfile)
+    mol = Chem.MolFromSmiles(smiles_to_test)
+    assert mol is not None
+    truth = Chem.MolFromMolFile(molfile)
+    assert Chem.MolToSmiles(mol) == Chem.MolToSmiles(truth)
+
+def test_3_amino_2_naphtoic_acid():
+    molfile = "tests/mol/3-amino-2-naphthoic_acid.mol"
+    smiles_to_test = gen_smiles(molfile)
+    mol = Chem.MolFromSmiles(smiles_to_test)
+    assert mol is not None
+    truth = Chem.MolFromMolFile(molfile)
+    assert Chem.MolToSmiles(mol) == Chem.MolToSmiles(truth)
